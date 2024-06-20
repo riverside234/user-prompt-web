@@ -32,16 +32,12 @@ export default async function Component({ params }) {
         answer = 0;
       } else if (selectedResponse === "response2") {
         answer = 1;
-      } else if (selectedResponse === "same") {
-        answer = 2;
       }
     } else if (randomValue === 1) {
       if (selectedResponse === "response1") {
         answer = 1;
       } else if (selectedResponse === "response2") {
         answer = 0;
-      } else if (selectedResponse === "same") {
-        answer = 2;
       }
     }
 
@@ -112,17 +108,7 @@ export default async function Component({ params }) {
             >
               Response 1
             </label>
-            <input
-              type="radio"
-              id="same"
-              name="response"
-              className="form-radio"
-              style={{ width: "1.5rem", height: "1.5rem" }}
-              value="same"
-            />
-            <label htmlFor="same" className="text-gray-700 dark:text-gray-300">
-              Same
-            </label>
+
             <input
               type="radio"
               id="response2"
