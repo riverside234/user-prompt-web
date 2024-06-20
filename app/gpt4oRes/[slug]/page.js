@@ -18,6 +18,8 @@ export default async function Component({ params }) {
     redirect("/gpt4oRes");
   }
 
+  const randomValue = Math.random() < 0.5 ? 0 : 1;
+
   async function submitItem(formData) {
     "use server";
 
@@ -25,12 +27,22 @@ export default async function Component({ params }) {
 
     let answer = 0;
 
-    if (selectedResponse === "response1") {
-      answer = 0;
-    } else if (selectedResponse === "response2") {
-      answer = 1;
-    } else if (selectedResponse === "same") {
-      answer = 2;
+    if (randomValue === 0) {
+      if (selectedResponse === "response1") {
+        answer = 0;
+      } else if (selectedResponse === "response2") {
+        answer = 1;
+      } else if (selectedResponse === "same") {
+        answer = 2;
+      }
+    } else if (randomValue === 1) {
+      if (selectedResponse === "response1") {
+        answer = 1;
+      } else if (selectedResponse === "response2") {
+        answer = 0;
+      } else if (selectedResponse === "same") {
+        answer = 2;
+      }
     }
 
     await saveItems(answer);
@@ -52,60 +64,54 @@ export default async function Component({ params }) {
               <Card className="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-gray-700 dark:text-gray-300 font-semibold">
-                    Original
+                    Response 1
                   </p>
                   <MessageCircleIcon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
                 </div>
 
-                <TextWithLineBreaks text={item["original_response"]} />
-              </Card>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="response1"
-                  name="response"
-                  className="form-radio"
-                  style={{ width: "1.5rem", height: "1.5rem" }}
-                  value="response1"
+                <TextWithLineBreaks
+                  text={
+                    randomValue === 0
+                      ? item["original_response"]
+                      : item["revised_response"]
+                  }
                 />
-                <label
-                  htmlFor="response1"
-                  className="text-gray-700 dark:text-gray-300"
-                >
-                  Response 1
-                </label>
-              </div>
+              </Card>
             </div>
             <div className="space-y-4">
               <Card className="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-gray-700 dark:text-gray-300 font-semibold">
-                    Revised
+                    Response 2
                   </p>
                   <MessageCircleIcon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
                 </div>
-                <TextWithLineBreaks text={item["revised_response"]} />
-              </Card>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="response2"
-                  name="response"
-                  className="form-radio"
-                  style={{ width: "1.5rem", height: "1.5rem" }}
-                  value="response2"
+                <TextWithLineBreaks
+                  text={
+                    randomValue === 1
+                      ? item["original_response"]
+                      : item["revised_response"]
+                  }
                 />
-                <label
-                  htmlFor="response2"
-                  className="text-gray-700 dark:text-gray-300"
-                >
-                  Response 2
-                </label>
-              </div>
+              </Card>
             </div>
           </div>
 
           <div className="flex justify-center pb-6 space-x-2">
+            <input
+              type="radio"
+              id="response1"
+              name="response"
+              className="form-radio"
+              style={{ width: "1.5rem", height: "1.5rem" }}
+              value="response1"
+            />
+            <label
+              htmlFor="response1"
+              className="text-gray-700 dark:text-gray-300"
+            >
+              Response 1
+            </label>
             <input
               type="radio"
               id="same"
@@ -116,6 +122,20 @@ export default async function Component({ params }) {
             />
             <label htmlFor="same" className="text-gray-700 dark:text-gray-300">
               Same
+            </label>
+            <input
+              type="radio"
+              id="response2"
+              name="response"
+              className="form-radio"
+              style={{ width: "1.5rem", height: "1.5rem" }}
+              value="response2"
+            />
+            <label
+              htmlFor="response2"
+              className="text-gray-700 dark:text-gray-300"
+            >
+              Response 2
             </label>
           </div>
           <div className="flex justify-center ">
