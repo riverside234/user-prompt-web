@@ -5,7 +5,8 @@ import TextWithLineBreaks from "@/lib/TextWithLineBreaks";
 import { saveItems } from "@/items";
 import { redirect } from "next/navigation";
 
-const path = "/home/bobxyz/user-prompt-web/lib/gpt4o-gpt4oResponse.jsonl";
+const path =
+  "/home/ubuntu/userTest/home/bobxyz/user-prompt-web/lib/gpt4o-gpt4oResponse.jsonl";
 
 export default async function Component({ params }) {
   const data = await fetchAndParseJSONL(path);
